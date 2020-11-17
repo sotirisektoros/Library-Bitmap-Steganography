@@ -44,7 +44,7 @@ typedef struct image{
     BITMAPFILEHEADER* fheader;
     BITMAPINFOHEADER* iheader;
     dword size;
-    PIXEL* data;
+    PIXEL** data;
 }__attribute__ ((__packed__)) IMAGE;
 
 IMAGE* readImage(char* filename);
