@@ -51,4 +51,6 @@ IMAGE* readImage(char* filename);
 
 void saveImage(IMAGE* i, char* filename);
 
+IMAGE* copyImage(IMAGE* i);
+
 #endif //EPL232_HW4_BMP_H
