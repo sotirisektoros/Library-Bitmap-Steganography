@@ -16,6 +16,9 @@ IMAGE* readImage(char* filename){
     IMAGE* i=(IMAGE*)malloc(sizeof(IMAGE));
     i->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
     i->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
+
+    //BITMAP_FILE_HEADER
+
     byte* fh=(byte*)malloc(14*sizeof(byte));
     fscanf(fp,fh,14*sizeof(byte));
     i->fheader->bfOffBits= (*(fh)) & 0xFFFFFFFF;          *fh >> 32;
@@ -25,6 +28,10 @@ IMAGE* readImage(char* filename){
     i->fheader->bfType2=*(fh) & 0xF;                      *fh >> 4;
     i->fheader->bfType1=*(fh) & 0xF;                      *fh >> 4;
     free(fh);
+
+
+    //BITMAP_INFO_HEADER
+
     byte* ih=(byte*)malloc(40*sizeof(byte));
     fscanf(fp,ih,40*sizeof(byte));
     i->iheader->biClrImportant = (*(ih)) & 0xFFFFFFFF;    *ih >> 32;
@@ -39,6 +46,10 @@ IMAGE* readImage(char* filename){
     i->iheader->biWidth = (*(ih)) & 0xFFFFFFFF;           *ih >> 32;
     i->iheader->biSize = (*(ih)) & 0xFFFFFFFF;            *ih >> 32;
     free(ih);
+
+
+    //BITMAP DATA
+
     i->size=i->iheader->biHeight*i->iheader->biWidth;
     i->data = (PIXEL**)malloc(i->size*sizeof(PIXEL*));
     char* temp=(char*)malloc(3*sizeof(byte));
