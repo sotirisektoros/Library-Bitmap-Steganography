@@ -53,11 +53,59 @@ IMAGE* readImage(char* filename){
     return i;
 }
 
-void saveImage(IMAGE* i, char* filename);{
+void saveImage(IMAGE* i, char* filename){
+
+
+
 
 }
 
-IMAGE* copyImage(IMAGE* i);{
+IMAGE* copyImage(IMAGE* i){
+
+
+    IMAGE* copy =(IMAGE*)malloc(sizeof(IMAGE));
+
+
+    copy->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
+    copy->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
+
+    //BITMAP_FILE_HEADER
+
+    copy->fheader->bfOffBits = i->fheader->bfOffBits;
+    copy->fheader->bfReserved2= i->fheader->bfReserved2;
+    copy->fheader->bfReserved1= i->fheader->bfReserved2;
+    copy->fheader->bfSize= i->fheader->bfSize;
+    copy->fheader->bfType2= i->fheader->bfType2;
+    copy->fheader->bfType1= i->fheader->bfType1;
+
+
+
+    //BITMAP_INFO_HEADER
+
+    copy->iheader->biClrImportant = i->iheader->biClrImportant;
+    copy->iheader->biClrUsed = i->iheader->biClrUsed;
+    copy->iheader->biYPelsPerMeter = i->iheader->biYPelsPerMeter;
+    copy->iheader->biXPelsPerMeter = i->iheader->biXPelsPerMeter;
+    copy->iheader->biSizeImage = i->iheader->biSizeImage;
+    copy->iheader->biCompression = i->iheader->biCompression;
+    copy->iheader->biBitCount = i->iheader->biBitCount;
+    copy->iheader->biPlanes = i->iheader->biPlanes;
+    copy->iheader->biHeight = i->iheader->biHeight;
+    copy->iheader->biWidth = i->iheader->biWidth;
+    copy->iheader->biSize = i->iheader->biSize;
+
+
+    //BITMAP DATA
+
+    copy->size=i->size;
+    copy->data = (PIXEL**)malloc(copy->size*sizeof(PIXEL*));
+    for (int j = 0; j < i->size; ++j) {
+        *(copy->data+j)=(PIXEL*)malloc(sizeof(PIXEL));
+
+        (*(copy->data+j))->b = (*(i->data+j))->b;
+        (*(copy->data+j))->g = (*(i->data+j))->g;
+        (*(copy->data+j))->r = (*(i->data+j))->r;
+    }
 
     return copy;
 }
