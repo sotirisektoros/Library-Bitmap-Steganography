@@ -34,5 +34,21 @@ typedef struct bitmapinfoheader{
 
 } __attribute__ ((__packed__)) BITMAPINFOHEADER;
 
+typedef struct pixel {
+    byte r;
+    byte g;
+    byte b;
+}__attribute__ ((__packed__)) PIXEL;
+
+typedef struct image{
+    BITMAPFILEHEADER* fheader;
+    BITMAPINFOHEADER* iheader;
+    dword size;
+    PIXEL* data;
+}__attribute__ ((__packed__)) IMAGE;
+
+IMAGE* readImage(char* filename);
+
+void saveImage(IMAGE* i, char* filename);
 
 #endif //EPL232_HW4_BMP_H
