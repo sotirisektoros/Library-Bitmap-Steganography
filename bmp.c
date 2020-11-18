@@ -142,8 +142,8 @@ IMAGE* copyImage(IMAGE* i){
 }
 
 void main(){
-    char* filename="";//full path
+    char* filename="/home/chris275/CLionProjects/EPL232_HW4/Examples/4x3.bmp";//full path
     IMAGE* i = readImage(filename);
-    printf("%byte\n%byte\n%dword\n",&i->fheader->bfType1,&i->fheader->bfType2,&i->fheader->bfSize);
-    printf("%dword\n%dword\n%word",&i->iheader->biHeight,&i->iheader->biWidth,&i->iheader->biBitCount);
+    printf("%c\n%c\n%hu\n",i->fheader->bfType1,i->fheader->bfType2,i->fheader->bfSize);
+    printf("%u\n%u\n%u",i->iheader->biHeight,i->iheader->biWidth,i->iheader->biBitCount);
 }
