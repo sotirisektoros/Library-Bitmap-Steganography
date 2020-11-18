@@ -5,9 +5,9 @@
 #ifndef EPL232_HW4_BMP_H
 #define EPL232_HW4_BMP_H
 
-typedef unsigned char byte;
-typedef unsigned short int word;
-typedef unsigned int dword;
+typedef unsigned char byte; //%c
+typedef unsigned short int word; //%hu
+typedef unsigned int dword; //u
 
 
 typedef struct bitmapfileheader{
