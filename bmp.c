@@ -7,7 +7,7 @@
 #include "stdio.h"
 #include "string.h"
 
-IMAGE* readImage(char* filename){
+/** IMAGE* readImage(char* filename){
     FILE *fp;
     if((fp = fopen(filename,"rb")) == NULL){
         printf("Error opening file!");
@@ -63,6 +63,22 @@ IMAGE* readImage(char* filename){
     free(temp);
     return i;
 }
+*/
+IMAGE* readImage(char* filename){
+    FILE *fp;
+    if((fp = fopen(filename,"rb")) == NULL){
+        printf("Error opening file!");
+        exit(1);
+    }
+    IMAGE* i=(IMAGE*)malloc(sizeof(IMAGE));
+    i->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
+    i->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
+    i->data = (PIXEL*)malloc(i->size*sizeof(PIXEL));
+    fread(i->fheader,sizeof(i->fheader),1,fp);
+    fread(i->iheader,sizeof(i->iheader),1,fp);
+    fread(i->data,sizeof(PIXEL),i->size,fp);
+    return i;
+}
 
 void saveImage(IMAGE* i, char* filename){
 
@@ -80,7 +96,7 @@ IMAGE* copyImage(IMAGE* i){
     copy->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
     copy->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
 
-    //BITMAP_FILE_HEADER
+    //BITMAP_FILE_HEADER  memcpy(copy->fheader,i->fheader,sizeof(BITMAPFILEHEADER))
 
     copy->fheader->bfOffBits = i->fheader->bfOffBits;
     copy->fheader->bfReserved2= i->fheader->bfReserved2;
@@ -91,7 +107,7 @@ IMAGE* copyImage(IMAGE* i){
 
 
 
-    //BITMAP_INFO_HEADER
+    //BITMAP_INFO_HEADER  memcpy(copy->iheader,i->iheader,sizeof(BITMAPINFOHEADER))
 
     copy->iheader->biClrImportant = i->iheader->biClrImportant;
     copy->iheader->biClrUsed = i->iheader->biClrUsed;
@@ -109,15 +125,25 @@ IMAGE* copyImage(IMAGE* i){
     //BITMAP DATA
 
     copy->size=i->size;
-    copy->data = (PIXEL**)malloc(copy->size*sizeof(PIXEL*));
+    copy->data = (PIXEL*)malloc(copy->size*sizeof(PIXEL));
+    for (int j = 0; j < copy->size; ++j) {
+        copy->data[j]=i->data[j];  // or use memcpy(&copy->data[j],&i->data[j]
+    }
+   /** copy->data = (PIXEL**)malloc(copy->size*sizeof(PIXEL*));
     for (int j = 0; j < i->size; ++j) {
         *(copy->data+j)=(PIXEL*)malloc(sizeof(PIXEL));
 
         (*(copy->data+j))->b = (*(i->data+j))->b;
         (*(copy->data+j))->g = (*(i->data+j))->g;
         (*(copy->data+j))->r = (*(i->data+j))->r;
-    }
+    }*/
 
     return copy;
 }
 
+void main(){
+    char* filename="";//full path
+    IMAGE* i = readImage(filename);
+    printf("%byte\n%byte\n%dword\n",&i->fheader->bfType1,&i->fheader->bfType2,&i->fheader->bfSize);
+    printf("%dword\n%dword\n%word",&i->iheader->biHeight,&i->iheader->biWidth,&i->iheader->biBitCount);
+}
