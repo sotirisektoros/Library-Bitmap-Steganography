@@ -1,86 +1,56 @@
-//
-// Created by leoni on 17/11/2020.
-//
 
 #include "bmp.h"
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
 
-/** IMAGE* readImage(char* filename){
-    FILE *fp;
-    if((fp = fopen(filename,"rb")) == NULL){
-        printf("Error opening file!");
-        exit(1);
-    }
-    IMAGE* i=(IMAGE*)malloc(sizeof(IMAGE));
-    i->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
-    i->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
 
-    //BITMAP_FILE_HEADER
-
-    byte* fh=(byte*)malloc(14*sizeof(byte));
-    fscanf(fp,fh,14*sizeof(byte));
-    i->fheader->bfOffBits= (*(fh)) & 0xFFFFFFFF;          *fh >> 32;
-    i->fheader->bfReserved2= (*(fh)) & 0xFFFF;            *fh >> 16;
-    i->fheader->bfReserved1= (*(fh)) & 0xFFFF;            *fh >> 16;
-    i->fheader->bfSize=*(fh) & 0xFFFFFFFF;                *fh >> 32;
-    i->fheader->bfType2=*(fh) & 0xF;                      *fh >> 4;
-    i->fheader->bfType1=*(fh) & 0xF;                      *fh >> 4;
-    free(fh);
-
-
-    //BITMAP_INFO_HEADER
-
-    byte* ih=(byte*)malloc(40*sizeof(byte));
-    fscanf(fp,ih,40*sizeof(byte));
-    i->iheader->biClrImportant = (*(ih)) & 0xFFFFFFFF;    *ih >> 32;
-    i->iheader->biClrUsed = (*(ih)) & 0xFFFFFFFF;         *ih >> 32;
-    i->iheader->biYPelsPerMeter = (*(ih)) & 0xFFFFFFFF;   *ih >> 32;
-    i->iheader->biXPelsPerMeter = (*(ih)) & 0xFFFFFFFF;   *ih >> 32;
-    i->iheader->biSizeImage = (*(ih)) & 0xFFFFFFFF;       *ih >> 32;
-    i->iheader->biCompression = (*(ih)) & 0xFFFFFFFF;     *ih >> 32;
-    i->iheader->biBitCount = (*(ih)) & 0xFFFF;            *ih >> 16;
-    i->iheader->biPlanes = (*(ih)) & 0xFFFF;              *ih >> 16;
-    i->iheader->biHeight = (*(ih)) & 0xFFFFFFFF;          *ih >> 32;
-    i->iheader->biWidth = (*(ih)) & 0xFFFFFFFF;           *ih >> 32;
-    i->iheader->biSize = (*(ih)) & 0xFFFFFFFF;            *ih >> 32;
-    free(ih);
-
-
-    //BITMAP DATA
-
-    i->size=i->iheader->biHeight*i->iheader->biWidth;
-    i->data = (PIXEL**)malloc(i->size*sizeof(PIXEL*));
-    char* temp=(char*)malloc(3*sizeof(byte));
-    for (int j = 0; j < i->size; ++j) {
-        *(i->data+j)=(PIXEL*)malloc(sizeof(PIXEL));
-        fscanf(fp,temp,3*sizeof(byte));
-        (*(i->data+j))->b = *(temp) & 0xFF;               *temp >> 8;
-        (*(i->data+j))->g = *(temp) & 0xFF;               *temp >> 8;
-        (*(i->data+j))->r = *(temp) & 0xFF;               *temp >> 8;
-    }
-    free(temp);
-    return i;
-}
-*/
 IMAGE* readImage(char* filename){
+
     FILE *fp;
     if((fp = fopen(filename,"rb")) == NULL){
         printf("Error opening file!");
         exit(1);
     }
     IMAGE* i=(IMAGE*)malloc(sizeof(IMAGE));
+
     i->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
     i->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
     i->data = (PIXEL*)malloc(i->size*sizeof(PIXEL));
-    fread(i->fheader,sizeof(i->fheader),1,fp);
-    fread(i->iheader,sizeof(i->iheader),1,fp);
+
+
+    //BITMAP_FILE_HEADER
+    fread(i->fheader,sizeof(BITMAPFILEHEADER),1,fp);
+
+    //BITMAP_INFO_HEADER
+    fread(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
+
+    //BITMAP DATA
     fread(i->data,sizeof(PIXEL),i->size,fp);
+
     return i;
 }
 
 void saveImage(IMAGE* i, char* filename){
+
+
+    FILE *fp;
+    if((fp = fopen(filename,"wb")) == NULL){
+        printf("Error opening file!");
+        exit(1);
+    }
+
+
+    //BITMAP_FILE_HEADER
+    fwrite(i->fheader,sizeof(BITMAPFILEHEADER),1,fp);
+
+    //BITMAP_INFO_HEADER
+    fwrite(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
+
+    //BITMAP DATA
+    fwrite(i->data,sizeof(PIXEL),i->size,fp);
+
+
 
 
 
@@ -141,9 +111,17 @@ IMAGE* copyImage(IMAGE* i){
     return copy;
 }
 
-void main(){
-    char* filename="/home/chris275/CLionProjects/EPL232_HW4/Examples/4x3.bmp";//full path
+int main(int argc,char** argv){
+    char* filename=argv[1];//full path
     IMAGE* i = readImage(filename);
-    printf("%c\n%c\n%hu\n",i->fheader->bfType1,i->fheader->bfType2,i->fheader->bfSize);
-    printf("%u\n%u\n%u",i->iheader->biHeight,i->iheader->biWidth,i->iheader->biBitCount);
+    printf("%c\n%c\n%hu\n%u\n",i->fheader->bfType1,i->fheader->bfType2,i->fheader->bfSize,i->fheader->bfOffBits);
+    printf("%u\n%u\n%hu",i->iheader->biHeight,i->iheader->biWidth,i->iheader->biBitCount);
+
+
+    saveImage(i,"4x3test.bmp");
+
+    printf("FINISH");
+
+return 0;
+
 }
