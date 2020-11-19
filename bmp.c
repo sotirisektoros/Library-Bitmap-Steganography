@@ -23,12 +23,16 @@ IMAGE* readImage(char* filename){
     //BITMAP_INFO_HEADER
     fread(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
 
-    i->size=i->iheader->biWidth*i->iheader->biHeight;
+    if((i->iheader->biWidth*3)%4 == 0){
+        i->size = (i->iheader->biWidth * i->iheader->biHeight);
+    }else
+        i->size = (i->iheader->biWidth * i->iheader->biHeight) + i->iheader->biHeight*((i->iheader->biWidth*3)%4);
+
     i->data = (PIXEL*)malloc(i->size*sizeof(PIXEL));
     //BITMAP DATA
     fread(i->data,sizeof(PIXEL),i->size,fp);
-    printf("%d",sizeof(PIXEL));
-    printf("%d%d%d",i->data->r,i->data->g,i->data->b);
+
+
     fclose(fp);
     return i;
 }
