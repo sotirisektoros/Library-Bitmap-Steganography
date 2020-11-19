@@ -16,8 +16,6 @@ IMAGE* readImage(char* filename){
 
     i->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
     i->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
-    i->data = (PIXEL*)malloc(i->size*sizeof(PIXEL));
-
 
     //BITMAP_FILE_HEADER
     fread(i->fheader,sizeof(BITMAPFILEHEADER),1,fp);
@@ -25,9 +23,13 @@ IMAGE* readImage(char* filename){
     //BITMAP_INFO_HEADER
     fread(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
 
+    i->size=i->iheader->biWidth*i->iheader->biHeight;
+    i->data = (PIXEL*)malloc(i->size*sizeof(PIXEL));
     //BITMAP DATA
     fread(i->data,sizeof(PIXEL),i->size,fp);
-
+    printf("%d",sizeof(PIXEL));
+    printf("%d%d%d",i->data->r,i->data->g,i->data->b);
+    fclose(fp);
     return i;
 }
 
@@ -51,7 +53,7 @@ void saveImage(IMAGE* i, char* filename){
     fwrite(i->data,sizeof(PIXEL),i->size,fp);
 
 
-
+    fclose(fp);
 
 
 
@@ -118,7 +120,7 @@ int main(int argc,char** argv){
     printf("%u\n%u\n%hu",i->iheader->biHeight,i->iheader->biWidth,i->iheader->biBitCount);
 
 
-    saveImage(i,"4x3test.bmp");
+    saveImage(i,"4x3new.bmp");
 
     printf("FINISH");
 
