@@ -9,7 +9,7 @@
 
 typedef unsigned char byte; //%c
 typedef unsigned short int word; //%hu
-typedef unsigned int dword; //u
+typedef unsigned int dword; //%u
 
 
 typedef struct bitmapfileheader{

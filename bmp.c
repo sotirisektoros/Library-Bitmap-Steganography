@@ -116,7 +116,7 @@ IMAGE* copyImage(IMAGE* i){
 
     return copy;
 }
-
+#ifdef DEBUGBMP
 int main(int argc,char** argv){
     char* filename=argv[1];//full path
     IMAGE* i = readImage(filename);
@@ -131,3 +131,4 @@ int main(int argc,char** argv){
 return 0;
 
 }
+#endif
