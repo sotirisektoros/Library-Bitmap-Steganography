@@ -3,4 +3,4 @@ project(EPL232_HW4 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(EPL232_HW4 bmp.c bmp.h grayscale.c grayscale.h list.c list.h)
+add_executable(EPL232_HW4 bmp.c bmp.h grayscale.c grayscale.h list.c list.h encodeStegano.c encodeStegano.h)
