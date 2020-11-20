@@ -1,6 +1,14 @@
-//
-// Created by chris275 on 19/11/20.
-//
+/**
+ *
+ * @file encodeStegano.c
+ *
+ * @brief This file represents the -encodeStegano function of the program.
+ *
+ * @author Christos Kasoulides
+ * @version 1.0
+ * @since 20/11/20
+ *
+ */
 
 #include "encodeStegano.h"
 #include <stdlib.h>
@@ -34,7 +42,7 @@ static byte getBitMask(int noOfBits){
     }
 }
 
-IMAGE *encodeStegano(int noOfbits, IMAGE *cover, IMAGE *secret) {
+void encodeStegano(int noOfbits, IMAGE *cover, IMAGE *secret) {
 
 
     if (checkImageCompatibility(cover, secret) == EXIT_FAILURE) {
@@ -63,7 +71,7 @@ IMAGE *encodeStegano(int noOfbits, IMAGE *cover, IMAGE *secret) {
 
     }
 
-    return cover;
+
 
 }
 
@@ -80,8 +88,9 @@ int main(int argc, char **argv) {
     char *secretImageName = argv[3];
     IMAGE *secretImage = readImage(secretImageName);
 
+    encodeStegano(noOfBits, coverImage, secretImage);
 
-    saveImage(encodeStegano(noOfBits, coverImage, secretImage), "new-IMG_6865.bmp");
+    saveImage(coverImage, "new-IMG_6865.bmp");
 
     printf("\nFinished encoding\n");
 
