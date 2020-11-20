@@ -20,7 +20,7 @@ void bmpToGrayscale(IMAGE* i){
     }
 }
 
-static void PixelToLuminance (PIXEL* p){
+void PixelToLuminance (PIXEL* p){
     byte luminance = round(0.299*p->r+0.587*p->g+0.114*p->b);
     p->r=luminance;
     p->g=luminance;
