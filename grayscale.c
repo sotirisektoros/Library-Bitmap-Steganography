@@ -11,7 +11,7 @@ void bmpToGrayscale(IMAGE* i){
     int padding=(i->iheader->biWidth*3)%4;
     for (int j = 0; j < i->size; ++j) {
         if(counter<line){
-         //   PixelToLuminance(&i->data[j]);
+          PixelToLuminance(&i->data[j]);
         }
         else{
             counter=0;
@@ -20,14 +20,14 @@ void bmpToGrayscale(IMAGE* i){
     }
 }
 
-/*
+
 static void PixelToLuminance (PIXEL* p){
     byte luminance = round(0.299*p->r+0.587*p->g+0.114*p->b);
     p->r=luminance;
     p->g=luminance;
     p->b=luminance;
 }
-*/
+
 
 #ifdef DEBUGGRAYSCALE
 int main(int argc,char** argv){
