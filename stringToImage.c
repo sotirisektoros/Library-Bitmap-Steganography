@@ -35,13 +35,42 @@ byte* readTextFile(char* filename){
     return input;
 }
 
-void stringToImage(IMAGE* i, byte* text){
-
+void stringToImage(IMAGE* image, byte* text){
+    byte padding=(image->iheader->biWidth*3)%4;
+    for (byte i = 0; i < image->iheader->biWidth; i++) {
+        for (byte j = 0; j < image->iheader->biHeight; j++) {
+                ((image->data)+(j * image->iheader->biWidth + i + (j) * padding))->r=(128 * getBit(text, image->iheader->biHeight * i + j));
+                ((image->data)+(j * image->iheader->biWidth + i + (j) * padding))->g=(128 * getBit(text, image->iheader->biHeight * i + j));
+                ((image->data)+(j * image->iheader->biWidth + i + (j) * padding))->b=(128 * getBit(text, image->iheader->biHeight * i + j));
+        }
+    }
 }
 
-#ifdef DEBUGSTRINGTOIMAGE
+/*void stringToImage(IMAGE* image, byte* text){
+    byte padding=(image->iheader->biWidth*3)%4;
+    for (byte j = 0; j < image->iheader->biWidth; j++) {
+        for (byte i = 0; i < image->iheader->biHeight; i++) {
+            ((image->data)+(i*image->iheader->biWidth+j+(i)*padding))->r=(128*getBit(text,image->iheader->biHeight*j+i));
+            ((image->data)+(i*image->iheader->biWidth+j+(i)*padding))->g=(128*getBit(text,image->iheader->biHeight*j+i));
+            ((image->data)+(i*image->iheader->biWidth+j+(i)*padding))->b=(128*getBit(text,image->iheader->biHeight*j+i));
+        }
+    }
+}*/
+
+byte getBit(byte* text, byte position){
+    if (strlen(text)<=position/8){
+        return 0;
+    }
+    byte c=(*(text+position/8) & (0x1 << (7-(position%8)))) >> (7-(position%8));
+    return c;
+}
+
+//#ifdef DEBUGSTRINGTOIMAGE
 int main(){
     readTextFile("strFile.txt");
+    IMAGE* i=readImage("3x4.bmp");
+    stringToImage(i,"AC");
+    saveImage(i,"C:\\Users\\leoni\\Desktop\\testStringToImage.bmp");
     return 0;
 }
-#endif
+//#endif

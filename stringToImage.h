@@ -9,6 +9,8 @@
 
 byte* readTextFile(char* filename);
 
-void stringToImage(IMAGE* i, byte* text);
+void stringToImage(IMAGE* image, byte* text);
+
+byte getBit(byte* text, byte position);
 
 #endif //EPL232_HW4_STRINGTOIMAGE_H
