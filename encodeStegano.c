@@ -61,9 +61,9 @@ void encodeStegano(int noOfbits, IMAGE *cover, IMAGE *secret) {
             byte maskG = ((secret->data[cnt].g) & copy) >> (8-noOfbits);
             byte maskB = ((secret->data[cnt].b) & copy) >> (8-noOfbits);
 
-            (cover->data[cnt].r) = (cover->data[cnt].r) | maskR;
-            (cover->data[cnt].g) = (cover->data[cnt].g) | maskG;
-            (cover->data[cnt].b) = (cover->data[cnt].b) | maskB;
+            (cover->data[cnt].r) = (((cover->data[cnt].r) >> noOfbits ) << noOfbits)  | maskR;
+            (cover->data[cnt].g) = (((cover->data[cnt].g) >> noOfbits ) << noOfbits)  | maskG;
+            (cover->data[cnt].b) = (((cover->data[cnt].b) >> noOfbits ) << noOfbits)  | maskB;
 
             cnt++;
         }
