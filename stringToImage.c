@@ -35,6 +35,14 @@ byte* readTextFile(char* filename){
     return input;
 }
 
+static byte getBit(byte* text, byte position){
+    if (strlen(text)<=position/8){
+        return 0;
+    }
+    byte c=(*(text+position/8) & (0x1 << (7-(position%8)))) >> (7-(position%8));
+    return c;
+}
+
 void stringToImage(IMAGE* image, byte* text){
     byte padding=(image->iheader->biWidth*3)%4;
     for (byte i = 0; i < image->iheader->biWidth; i++) {
@@ -46,26 +54,8 @@ void stringToImage(IMAGE* image, byte* text){
     }
 }
 
-/*void stringToImage(IMAGE* image, byte* text){
-    byte padding=(image->iheader->biWidth*3)%4;
-    for (byte j = 0; j < image->iheader->biWidth; j++) {
-        for (byte i = 0; i < image->iheader->biHeight; i++) {
-            ((image->data)+(i*image->iheader->biWidth+j+(i)*padding))->r=(128*getBit(text,image->iheader->biHeight*j+i));
-            ((image->data)+(i*image->iheader->biWidth+j+(i)*padding))->g=(128*getBit(text,image->iheader->biHeight*j+i));
-            ((image->data)+(i*image->iheader->biWidth+j+(i)*padding))->b=(128*getBit(text,image->iheader->biHeight*j+i));
-        }
-    }
-}*/
 
-byte getBit(byte* text, byte position){
-    if (strlen(text)<=position/8){
-        return 0;
-    }
-    byte c=(*(text+position/8) & (0x1 << (7-(position%8)))) >> (7-(position%8));
-    return c;
-}
-
-//#ifdef DEBUGSTRINGTOIMAGE
+#ifdef DEBUGSTRINGTOIMAGE
 int main(){
     readTextFile("strFile.txt");
     IMAGE* i=readImage("3x4.bmp");
@@ -73,4 +63,4 @@ int main(){
     saveImage(i,"C:\\Users\\leoni\\Desktop\\testStringToImage.bmp");
     return 0;
 }
-//#endif
+#endif
