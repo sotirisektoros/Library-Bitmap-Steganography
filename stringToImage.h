@@ -1,0 +1,8 @@
+//
+// Created by leoni on 20/11/2020.
+//
+
+#ifndef EPL232_HW4_STRINGTOIMAGE_H
+#define EPL232_HW4_STRINGTOIMAGE_H
+
+#endif //EPL232_HW4_STRINGTOIMAGE_H
