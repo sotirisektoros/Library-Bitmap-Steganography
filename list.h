@@ -14,6 +14,13 @@
 
 #include "bmp.h"
 
+/**
+ * This function lists every element in the header of the image.
+ *
+ * @param i is an IMAGE representing the given image
+ *
+ * @return void
+ */
 void list(IMAGE *i);
 
 
