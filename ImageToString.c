@@ -28,11 +28,11 @@ void ImageToString(IMAGE* image, byte* text) {
     printf("%s", text);
 }
 
-//#ifdef DEBUGIMAGETOSTRING
+#ifdef DEBUGIMAGETOSTRING
 int main(){
     byte* text;
     IMAGE* i=readImage("C:\\Users\\leoni\\Desktop\\testStringToImage.bmp");
     ImageToString(i,text);
     return 0;
 }
-//#endif
+#endif
