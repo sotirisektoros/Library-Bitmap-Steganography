@@ -5,12 +5,13 @@
 #include "ImageToString.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
-void ImageToString(IMAGE* image, byte* text) {
+/*void ImageToString(IMAGE* image, byte* text) {
     text = (byte *) calloc(image->size+1, sizeof(byte));
-/*    for (byte i = 0; i < image->size; i++) {
+*//*    for (byte i = 0; i < image->size; i++) {
         *(text+i)=0;
-    }*/
+    }*//*
     byte padding = (image->iheader->biWidth * 3) % 4;
     for (int i = 0; i < image->iheader->biWidth; i++) {
         for (int j = 0; j < image->iheader->biHeight; j++) {
@@ -23,19 +24,52 @@ void ImageToString(IMAGE* image, byte* text) {
                 c|=mask;
                 *(text+position/8)=c;
             }
-/*            else{
+*//*            else{
                 *(text+position/8)&0x0<<(position%8);
-            }*/
+            }*//*
         }
     }
     printf("%s", text);
     fflush(stdout);
+}*/
+
+void ImageToString(IMAGE* image, byte* text) {
+    text = (byte *) calloc(1, sizeof(byte));
+/*    for (byte i = 0; i < image->size; i++) {
+        *(text+i)=0;
+    }*/
+    int countBits=0;
+    byte padding = (image->iheader->biWidth * 3) % 4;
+    byte c='\0';
+    for (int i = 0; i < image->iheader->biWidth; i++) {
+        for (int j = 0; j < image->iheader->biHeight; j++) {
+            byte p=((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i + (j) * padding))->r;
+            //printf("%d",p);
+            if(p==128){
+                c<<=1;
+                c|=1;
+                countBits++;
+            }
+            else{
+                c<<=1;
+                countBits++;
+            }
+            if (countBits==8){
+                countBits=0;
+                text=(byte*)realloc(text,(strlen(text)+2)*sizeof(byte));
+                strcat(text,&c);
+                c='\0';
+            }
+        }
+    }
+    printf("%s", text);
+    //fflush(stdout);
 }
 
 #ifdef DEBUGIMAGETOSTRING
-int main(){
+int main(int argc, char**argv){
     byte* text;
-    IMAGE* i=readImage("C:\\Users\\leoni\\Desktop\\testStringToImage.bmp");
+    IMAGE* i=readImage(argv[1]);
     ImageToString(i,text);
     return 0;
 }

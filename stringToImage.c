@@ -67,9 +67,9 @@ void stringToImage(IMAGE* image, byte* text){
 
 #ifdef DEBUGSTRINGTOIMAGE
 int main(){
-   // byte* text = readTextFile("strFile.txt");
-    IMAGE* i=readImage("3x4.bmp");
-    stringToImage(i,"AC");
+    byte* text = readTextFile("strFile.txt");
+    IMAGE* i=readImage("tux-pirate.bmp");
+    stringToImage(i,text);
     saveImage(i,"C:\\Users\\leoni\\Desktop\\testStringToImage.bmp");
     return 0;
 }
