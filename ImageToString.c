@@ -12,13 +12,16 @@ void ImageToString(IMAGE* image, byte* text) {
         *(text+i)=0;
     }*/
     byte padding = (image->iheader->biWidth * 3) % 4;
-    for (byte i = 0; i < image->iheader->biWidth; i++) {
-        for (byte j = 0; j < image->iheader->biHeight; j++) {
+    for (int i = 0; i < image->iheader->biWidth; i++) {
+        for (int j = 0; j < image->iheader->biHeight; j++) {
             byte position=(image->iheader->biHeight * i + j);
-            byte p=((image->data)+(j * image->iheader->biWidth + i + (j) * padding))->r;
-            printf("%d",p);
-            if(((image->data)+(j * image->iheader->biWidth + i + (j) * padding))->r==128){
-                *(text+position/8)&(0x1<<(position%8));
+            byte p=((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i + (j) * padding))->r;
+            //printf("%d",p);
+            if(p==128){
+                byte c=*(text+position/8);
+                byte mask=0x1<<(position%8);
+                c|=mask;
+                *(text+position/8)=c;
             }
 /*            else{
                 *(text+position/8)&0x0<<(position%8);
@@ -26,6 +29,7 @@ void ImageToString(IMAGE* image, byte* text) {
         }
     }
     printf("%s", text);
+    fflush(stdout);
 }
 
 #ifdef DEBUGIMAGETOSTRING
