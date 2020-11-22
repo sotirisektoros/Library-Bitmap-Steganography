@@ -43,8 +43,6 @@ static int *createPermutationFunction(int N, unsigned int systemkey) {
     }
 
     return permutation;
-
-
 }
 
 
@@ -103,7 +101,7 @@ char *readTextFromFile(char *filename) {
 }
 
 
-//#ifdef DEBUGET
+#ifdef DEBUGET
 int main(int argc, char **argv) {
 
 
@@ -120,7 +118,7 @@ int main(int argc, char **argv) {
     return 0;
 
 }
-//#endif
+#endif
 
 
 
