@@ -70,7 +70,7 @@ int main(){
     byte* text = readTextFile("strFile.txt");
     IMAGE* i=readImage("tux-pirate.bmp");
     stringToImage(i,text);
-    saveImage(i,"C:\\Users\\leoni\\Desktop\\testStringToImage.bmp");
+    saveImage(i,"/home/chris275/CLionProjects/EPL232_HW4/testStringToImage.bmp");
     return 0;
 }
 #endif
