@@ -33,9 +33,9 @@
     fflush(stdout);
 }*/
 
-void ImageToString(IMAGE* image, char* filename) {
+void ImageToString(IMAGE *image) {
     FILE* fp;
-    if((fp = fopen(filename,"wb")) == NULL){
+    if((fp = fopen("outputText.txt","wb")) == NULL){
         printf("Error opening file!");
         exit(1);
     }
