@@ -66,7 +66,7 @@ void ImageToString(IMAGE *image) {
 #ifdef DEBUGIMAGETOSTRING
 int main(int argc, char**argv){
     IMAGE* i=readImage(argv[1]);
-    ImageToString(i,argv[2]);
+    ImageToString(i);
     return 0;
 }
 #endif

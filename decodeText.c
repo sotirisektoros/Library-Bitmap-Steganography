@@ -48,16 +48,16 @@ void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filena
         o = temp[i];
         switch (o % 3) {
             case 0:
-                b |= (image->data[o / 3].b & 0x1);
-
+                b |= (image->data[o / 3].r & 0x1);
+                countBits++;
                 break;
             case 1:
                 b |= (image->data[o / 3].g & 0x1);
-
+                countBits++;
                 break;
             default:
-                b |= (image->data[o / 3].r & 0x1);
-
+                b |= (image->data[o / 3].b & 0x1);
+                countBits++;
                 break;
         }
         if(countBits==8){
@@ -66,12 +66,12 @@ void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filena
             b = '\0';
         }
         b<<=1;
-        countBits++;
+
     }
 
 }
 
-#ifdef DEBUGDT
+//#ifdef DEBUGDT
 int main(int argc, char **argv) {
     int msLength=atoi(argv[2]);
 
@@ -82,4 +82,4 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-#endif
+//#endif
