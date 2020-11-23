@@ -32,8 +32,12 @@ static int *createPermutationFunction(int N, unsigned int systemkey) {
     return permutation;
 }
 
-char* decodeText(IMAGE* image, int msLength, unsigned int systemkey){
-    char* text=(char*)calloc(msLength+1,sizeof(char));
+void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filename) {
+    FILE* fp;
+    if((fp = fopen(filename,"wb")) == NULL){
+        printf("Error opening file!");
+        exit(1);
+    }
     int o = 0;
     int countBits=0;
     byte b='\0';
@@ -42,7 +46,6 @@ char* decodeText(IMAGE* image, int msLength, unsigned int systemkey){
 
     for (int i = 0; i < (1 + msLength) * 8; i++) {
         o = temp[i];
-
         switch (o % 3) {
             case 0:
                 b |= (image->data[o / 3].b & 0x1);
@@ -59,24 +62,24 @@ char* decodeText(IMAGE* image, int msLength, unsigned int systemkey){
         }
         if(countBits==8){
             countBits=0;
-            strcat(text,&b);
+            fputc(b,fp);
             b = '\0';
         }
         b<<=1;
         countBits++;
-
-
     }
-    return text;
+
 }
 
 #ifdef DEBUGDT
 int main(int argc, char **argv) {
-    IMAGE *i = readImage(argv[1]);
     int msLength=atoi(argv[2]);
+
+    IMAGE *i = readImage(argv[1]);
+
     int systemkey = 123;
-    char *text = decodeText(i,msLength,systemkey);
-    printf("%s",text);
+    decodeText(i, msLength, systemkey, "test.txt");
+
     return 0;
 }
 #endif

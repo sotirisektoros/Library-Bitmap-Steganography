@@ -33,17 +33,17 @@
     fflush(stdout);
 }*/
 
-void ImageToString(IMAGE* image, byte* text) {
-    text = (byte *) calloc(1, sizeof(byte));
-/*    for (byte i = 0; i < image->size; i++) {
-        *(text+i)=0;
-    }*/
+void ImageToString(IMAGE* image, char* filename) {
+    FILE* fp;
+    if((fp = fopen(filename,"wb")) == NULL){
+        printf("Error opening file!");
+        exit(1);
+    }
     int countBits=0;
-    byte padding = (image->iheader->biWidth * 3) % 4;
     byte c='\0';
     for (int i = 0; i < image->iheader->biWidth; i++) {
         for (int j = 0; j < image->iheader->biHeight; j++) {
-            byte p=((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i + (j) * padding))->r;
+            byte p=((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->r; //(j) * padding
             //printf("%d",p);
             if(p==128){
                 c<<=1;
@@ -56,21 +56,17 @@ void ImageToString(IMAGE* image, byte* text) {
             }
             if (countBits==8){
                 countBits=0;
-                text=(byte*)realloc(text,(strlen(text)+2)*sizeof(byte));
-                strcat(text,&c);
+                fputc(c,fp);
                 c='\0';
             }
         }
     }
-    printf("%s", text);
-    //fflush(stdout);
 }
 
 #ifdef DEBUGIMAGETOSTRING
 int main(int argc, char**argv){
-    byte* text;
     IMAGE* i=readImage(argv[1]);
-    ImageToString(i,text);
+    ImageToString(i,argv[2]);
     return 0;
 }
 #endif

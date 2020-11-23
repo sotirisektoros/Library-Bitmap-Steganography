@@ -6,7 +6,7 @@
 #define EPL232_HW4_DECODETEXT_H
 #include "bmp.h"
 
-char* decodeText(IMAGE* image, int msLength, unsigned int systemkey);
+void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filename);
 
 
 #endif //EPL232_HW4_DECODETEXT_H

@@ -33,15 +33,31 @@ IMAGE* readImage(char* filename){
     }
 
 
-    if((i->iheader->biWidth*3)%4 == 0){
-        i->size = (i->iheader->biWidth * i->iheader->biHeight);
-    }else
-        i->size = (i->iheader->biWidth * i->iheader->biHeight) + i->iheader->biHeight*((i->iheader->biWidth*3)%4);
+    //if((i->iheader->biWidth*3)%4 == 0){
+    i->size = (i->iheader->biWidth * i->iheader->biHeight);
+    //}else
+        //i->size = (i->iheader->biWidth * i->iheader->biHeight) + i->iheader->biHeight*((i->iheader->biWidth*3)%4);
 
     i->data = (PIXEL*)malloc(i->size*sizeof(PIXEL));
     //BITMAP DATA
-    fread(i->data,sizeof(PIXEL),i->size,fp);
+    // fread(i->data,sizeof(PIXEL),i->size,fp);
+    int counter=0;
+    int padding=4-(i->iheader->biWidth*3)%4;
 
+    for (int j = 0; j < i->size; ++j) {
+        if(counter==i->iheader->biWidth*3){
+            counter=0;
+            if(padding!=4){
+                for (int k = 0; k < padding; ++k) {
+                    fgetc(fp);
+                }
+            }
+        }
+        i->data[j].r=fgetc(fp);
+        i->data[j].g=fgetc(fp);
+        i->data[j].b=fgetc(fp);
+        counter+=3;
+    }
 
     fclose(fp);
     return i;
@@ -64,68 +80,28 @@ void saveImage(IMAGE* i, char* filename){
     fwrite(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
 
     //BITMAP DATA
-    fwrite(i->data,sizeof(PIXEL),i->size,fp);
+    //fwrite(i->data,sizeof(PIXEL),i->size,fp);
+    int counter=0;
+    int padding=4-(i->iheader->biWidth*3)%4;
 
+    for (int j = 0; j < i->size; ++j) {
+        if(counter==i->iheader->biWidth*3){
+            counter=0;
+            if(padding!=4){
+                for (int k = 0; k < padding; ++k) {
+                    fputc('0',fp);
+                }
+            }
+        }
+        fputc(i->data[j].r,fp);
+        fputc(i->data[j].g,fp);
+        fputc(i->data[j].b,fp);
+        counter+=3;
+    }
 
     fclose(fp);
-
-
-
 }
 
-IMAGE* copyImage(IMAGE* i){
-
-
-    IMAGE* copy =(IMAGE*)malloc(sizeof(IMAGE));
-
-
-    copy->fheader=(BITMAPFILEHEADER*)malloc(sizeof(BITMAPFILEHEADER));
-    copy->iheader=(BITMAPINFOHEADER*)malloc(sizeof(BITMAPINFOHEADER));
-
-    //BITMAP_FILE_HEADER  memcpy(copy->fheader,i->fheader,sizeof(BITMAPFILEHEADER))
-
-    copy->fheader->bfOffBits = i->fheader->bfOffBits;
-    copy->fheader->bfReserved2= i->fheader->bfReserved2;
-    copy->fheader->bfReserved1= i->fheader->bfReserved2;
-    copy->fheader->bfSize= i->fheader->bfSize;
-    copy->fheader->bfType2= i->fheader->bfType2;
-    copy->fheader->bfType1= i->fheader->bfType1;
-
-
-
-    //BITMAP_INFO_HEADER  memcpy(copy->iheader,i->iheader,sizeof(BITMAPINFOHEADER))
-
-    copy->iheader->biClrImportant = i->iheader->biClrImportant;
-    copy->iheader->biClrUsed = i->iheader->biClrUsed;
-    copy->iheader->biYPelsPerMeter = i->iheader->biYPelsPerMeter;
-    copy->iheader->biXPelsPerMeter = i->iheader->biXPelsPerMeter;
-    copy->iheader->biSizeImage = i->iheader->biSizeImage;
-    copy->iheader->biCompression = i->iheader->biCompression;
-    copy->iheader->biBitCount = i->iheader->biBitCount;
-    copy->iheader->biPlanes = i->iheader->biPlanes;
-    copy->iheader->biHeight = i->iheader->biHeight;
-    copy->iheader->biWidth = i->iheader->biWidth;
-    copy->iheader->biSize = i->iheader->biSize;
-
-
-    //BITMAP DATA
-
-    copy->size=i->size;
-    copy->data = (PIXEL*)malloc(copy->size*sizeof(PIXEL));
-    for (int j = 0; j < copy->size; ++j) {
-        copy->data[j]=i->data[j];  // or use memcpy(&copy->data[j],&i->data[j]
-    }
-   /** copy->data = (PIXEL**)malloc(copy->size*sizeof(PIXEL*));
-    for (int j = 0; j < i->size; ++j) {
-        *(copy->data+j)=(PIXEL*)malloc(sizeof(PIXEL));
-
-        (*(copy->data+j))->b = (*(i->data+j))->b;
-        (*(copy->data+j))->g = (*(i->data+j))->g;
-        (*(copy->data+j))->r = (*(i->data+j))->r;
-    }*/
-
-    return copy;
-}
 #ifdef DEBUGBMP
 int main(int argc,char** argv){
     char* filename=argv[1];//full path

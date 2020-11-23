@@ -6,7 +6,7 @@
 #define EPL232_HW4_IMAGETOSTRING_H
 #include "bmp.h"
 
-void ImageToString(IMAGE* image, byte* text);
+void ImageToString(IMAGE* image,char* filename);
 
 void SaveTextFile(byte* text);
 

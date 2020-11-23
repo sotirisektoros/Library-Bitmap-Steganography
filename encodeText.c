@@ -51,6 +51,7 @@ void encodeText(IMAGE *image, char *text, unsigned int systemkey) {
 
     int* temp = (createPermutationFunction(image->fheader->bfSize-54, systemkey));
 
+
     for (int i = 0; i < (1 + strlen(text)) * 8; i++) {
         byte b = getBit(text, i);
         o = temp[i];
