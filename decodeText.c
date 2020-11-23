@@ -8,17 +8,6 @@
 #include <stdio.h>
 
 
-/*static byte getBit(char *m, int n) {
-    byte u;
-
-    if (n <= 8 * strlen(m)) {
-        u = (*(m + n / 8) & (0x1 << (7 - (n % 8)))) >> (7 - (n % 8));
-        return u;
-    } else
-        return 0;
-
-}*/
-
 static int *createPermutationFunction(int N, unsigned int systemkey) {
 
     srand(systemkey);
@@ -49,7 +38,7 @@ char* decodeText(IMAGE* image, int msLength, unsigned int systemkey){
     int countBits=0;
     byte b='\0';
 
-    int* temp = (createPermutationFunction(image->iheader->biSizeImage, systemkey));
+    int* temp = (createPermutationFunction((msLength+1)*8, systemkey));
 
     for (int i = 0; i < (1 + msLength) * 8; i++) {
         o = temp[i % (msLength + 1)];
@@ -81,7 +70,7 @@ char* decodeText(IMAGE* image, int msLength, unsigned int systemkey){
     return text;
 }
 
-//#ifdef DEBUGDT
+#ifdef DEBUGDT
 int main(int argc, char **argv) {
     IMAGE *i = readImage(argv[1]);
     int msLength=atoi(argv[2]);
@@ -90,4 +79,4 @@ int main(int argc, char **argv) {
     printf("%s",text);
     return 0;
 }
-//#endif
+#endif

@@ -1,6 +1,4 @@
-//
-// Created by chris275 on 22/11/20.
-//
+
 
 #ifndef EPL232_HW4_ENCODETEXT_H
 #define EPL232_HW4_ENCODETEXT_H
