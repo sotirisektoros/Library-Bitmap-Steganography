@@ -14,6 +14,7 @@
 #include "stringToImage.h"
 #include "ImageToString.h"
 
+/*
 int main(int argc,char** argv){
 
     char* option = argv[1];
@@ -62,3 +63,4 @@ int main(int argc,char** argv){
 
 
 }
+*/
