@@ -48,30 +48,35 @@ char* decodeText(IMAGE* image, int msLength, unsigned int systemkey){
     int o = 0;
     int countBits=0;
     byte b='\0';
+
+    int* temp = (createPermutationFunction(image->iheader->biSizeImage, systemkey));
+
     for (int i = 0; i < (1 + msLength) * 8; i++) {
-        o = (createPermutationFunction(msLength+1, systemkey)[i/8]);
+        o = temp[i % (msLength + 1)];
 
         switch (o % 3) {
             case 0:
-                b |= (image->data[o / 3].r & 0x1);
-                b<<=1;
-                countBits++;
+                b |= (image->data[o / 3].b & 0x1);
+
                 break;
             case 1:
                 b |= (image->data[o / 3].g & 0x1);
-                b<<=1;
-                countBits++;
+
                 break;
             default:
-                b |= (image->data[o / 3].b & 0x1);
-                b<<=1;
-                countBits++;
+                b |= (image->data[o / 3].r & 0x1);
+
                 break;
         }
         if(countBits==8){
             countBits=0;
             strcat(text,&b);
+            b = '\0';
         }
+        b<<=1;
+        countBits++;
+
+
     }
     return text;
 }

@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define SIZE 10
+
 
 static byte getBit(char *m, int n) {
     byte u;
@@ -21,7 +21,7 @@ static byte getBit(char *m, int n) {
 }
 
 
-static int *createPermutationFunction(int N, unsigned int systemkey) {
+static int* createPermutationFunction(int N, unsigned int systemkey) {
 
     srand(systemkey);
 
@@ -48,21 +48,24 @@ static int *createPermutationFunction(int N, unsigned int systemkey) {
 
 void encodeText(IMAGE *image, char *text, unsigned int systemkey) {
     int o = 0;
+
+    int* temp = (createPermutationFunction(image->iheader->biSizeImage, systemkey));
+
     for (int i = 0; i < (1 + strlen(text)) * 8; i++) {
         byte b = getBit(text, i);
-        o = (createPermutationFunction(strlen(text)+1, systemkey)[i/8]);
+        o = temp[i/8];
 
         switch (o % 3) {
             case 0:
-                image->data[o / 3].r = ((image->data[o / 3].r >> 1) << 1); //delete last bit of text[o] R byte
+                image->data[o / 3].r = ((image->data[o / 3].r >> 0x1) << 0x1); //delete last bit of text[o] R byte
                 image->data[o / 3].r = image->data[o / 3].r | b; //insert b in last bit of text[o] R byte
                 break;
             case 1:
-                image->data[o / 3].g = ((image->data[o / 3].g >> 1) << 1); //delete last bit of text[o] G byte
+                image->data[o / 3].g = ((image->data[o / 3].g >> 0x1) << 0x1); //delete last bit of text[o] G byte
                 image->data[o / 3].g = image->data[o / 3].g | b; //insert b in last bit of text[o] G byte
                 break;
             default:
-                image->data[o / 3].b = ((image->data[o / 3].b >> 1) << 1); //delete last bit of text[o] B byte
+                image->data[o / 3].b = ((image->data[o / 3].b >> 0x1) << 0x1); //delete last bit of text[o] B byte
                 image->data[o / 3].b = image->data[o / 3].b | b; //insert b in last bit of text[o] B byte
                 break;
         }
@@ -75,7 +78,7 @@ void encodeText(IMAGE *image, char *text, unsigned int systemkey) {
 char *readTextFromFile(char *filename) {
 
     FILE *fp;
-    //needs test if filename is .txt
+
     if ((fp = fopen(filename, "r")) == NULL) {
         printf("Error opening file!");
         exit(1);
