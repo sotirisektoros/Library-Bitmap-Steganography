@@ -1,6 +1,30 @@
-//
-// Created by leoni on 17/11/2020.
-//
+/*<This file represents the implementation of .bmp files.>
+Copyright (C) <2020>  <ckasou01>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+Υou should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
+/**
+ *
+ * @file bmp.h
+ *
+ * @brief This file represents the implementation of.bmp files.
+ *
+ * @author Christos Kasoulides
+ * @version 1.0
+ * @since 24/11/20
+ *
+ */
+
 
 #ifndef EPL232_HW4_BMP_H
 #define EPL232_HW4_BMP_H
