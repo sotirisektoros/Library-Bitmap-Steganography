@@ -38,10 +38,10 @@ char* decodeText(IMAGE* image, int msLength, unsigned int systemkey){
     int countBits=0;
     byte b='\0';
 
-    int* temp = (createPermutationFunction((msLength+1)*8, systemkey));
+    int* temp = (createPermutationFunction((image->fheader->bfSize-54, systemkey));
 
     for (int i = 0; i < (1 + msLength) * 8; i++) {
-        o = temp[i % (msLength + 1)];
+        o = temp[i];
 
         switch (o % 3) {
             case 0:

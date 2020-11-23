@@ -49,11 +49,11 @@ static int* createPermutationFunction(int N, unsigned int systemkey) {
 void encodeText(IMAGE *image, char *text, unsigned int systemkey) {
     int o = 0;
 
-    int* temp = (createPermutationFunction((strlen(text)+1)*8, systemkey));
+    int* temp = (createPermutationFunction((image->fheader->bfSize-54, systemkey));
 
     for (int i = 0; i < (1 + strlen(text)) * 8; i++) {
         byte b = getBit(text, i);
-        o = temp[i/8];
+        o = temp[i];
 
         switch (o % 3) {
             case 0:
