@@ -32,15 +32,10 @@ IMAGE* readImage(char* filename){
         printf("\nBits per PIXEL is not 24.\n");                // check if bits pe PIXEL are 24-bits
     }
 
-
-    //if((i->iheader->biWidth*3)%4 == 0){
     i->size = (i->iheader->biWidth * i->iheader->biHeight);
-    //}else
-        //i->size = (i->iheader->biWidth * i->iheader->biHeight) + i->iheader->biHeight*((i->iheader->biWidth*3)%4);
 
     i->data = (PIXEL*)malloc(i->size*sizeof(PIXEL));
     //BITMAP DATA
-    // fread(i->data,sizeof(PIXEL),i->size,fp);
     int counter=0;
     int padding=4-(i->iheader->biWidth*3)%4;
 
@@ -80,7 +75,6 @@ void saveImage(IMAGE* i, char* filename){
     fwrite(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
 
     //BITMAP DATA
-    //fwrite(i->data,sizeof(PIXEL),i->size,fp);
     int counter=0;
     int padding=4-(i->iheader->biWidth*3)%4;
 

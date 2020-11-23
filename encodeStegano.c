@@ -67,7 +67,6 @@ void encodeStegano(int noOfbits, IMAGE *cover, IMAGE *secret) {
 
             cnt++;
         }
-        //cnt += (cover->iheader->biWidth * 3) % 4;
 
     }
 

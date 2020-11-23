@@ -71,7 +71,7 @@ void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filena
 
 }
 
-//#ifdef DEBUGDT
+#ifdef DEBUGDT
 int main(int argc, char **argv) {
     int msLength=atoi(argv[2]);
 
@@ -82,4 +82,4 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-//#endif
+#endif

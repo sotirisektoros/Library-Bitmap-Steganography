@@ -51,7 +51,6 @@ void decodeStegano(int noOfbits,IMAGE* newImage) {
 
             cnt++;
         }
-       // cnt += (newImage->iheader->biWidth * 3) % 4;
     }
 }
 

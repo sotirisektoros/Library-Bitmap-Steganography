@@ -54,10 +54,9 @@ static byte getBit(byte* text, int position){
     }
 }*/
 void stringToImage(IMAGE* image, byte* text){
-    //byte padding=(image->iheader->biWidth*3)%4;
     for (int i = 0; i < image->iheader->biWidth; i++) {
         for (int j = 0; j < image->iheader->biHeight; j++) {
-            ((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->r=(128 * getBit(text, image->iheader->biHeight * i + j));//+ (j) * padding
+            ((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->r=(128 * getBit(text, image->iheader->biHeight * i + j));
             ((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->g=(128 * getBit(text, image->iheader->biHeight * i + j));
             ((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->b=(128 * getBit(text, image->iheader->biHeight * i + j));
         }

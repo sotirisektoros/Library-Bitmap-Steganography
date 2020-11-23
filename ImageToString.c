@@ -43,8 +43,7 @@ void ImageToString(IMAGE *image) {
     byte c='\0';
     for (int i = 0; i < image->iheader->biWidth; i++) {
         for (int j = 0; j < image->iheader->biHeight; j++) {
-            byte p=((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->r; //(j) * padding
-            //printf("%d",p);
+            byte p=((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->r;
             if(p==128){
                 c<<=1;
                 c|=1;
