@@ -22,6 +22,14 @@ IMAGE* readImage(char* filename){
 
     //BITMAP_INFO_HEADER
     fread(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
+    if (i->fheader->bfType1!='B' || i->fheader->bfType2!='M'){
+        printf("File %s is not .bmp image.\n",filename);
+    }
+    if (i->iheader->biCompression!=0){
+        printf("File %s is compressed.\n,filename");
+    }
+
+
 
     if((i->iheader->biWidth*3)%4 == 0){
         i->size = (i->iheader->biWidth * i->iheader->biHeight);
