@@ -1,10 +1,18 @@
-//
-// Created by chris275 on 23/11/20.
-//
+
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "bmp.h"
+#include "list.h"
+#include "grayscale.h"
+#include "encodeStegano.h"
+#include "decodeStegano.h"
+#include "encodeText.h"
+#include "decodeText.h"
+#include "stringToImage.h"
+#include "ImageToString.h"
 
 int main(int argc,char** argv){
 
@@ -14,6 +22,8 @@ int main(int argc,char** argv){
        for(int i = 2; i < argc; i++){
 
        }
+
+
 
 
 
