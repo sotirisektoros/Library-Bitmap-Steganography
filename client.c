@@ -94,7 +94,6 @@ int main(int argc, char **argv) {
         if (argc != 4) { //arguments for -decodeStegano from command line must be 2
             printf("\nWrong number of arguments.\n");
             exit(EXIT_FAILURE);
-
         }
 
         int noOfBits = atoi(argv[1]);
