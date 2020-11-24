@@ -15,7 +15,7 @@ GNU General Public License for more details.
 along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 /**
  *
- * @file client.c
+ * @file bmpSteganography.c
  *
  * @brief This file represents the client.
  *
@@ -127,10 +127,10 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
 
-        int noOfBits = atoi(argv[1]);
+        int noOfBits = atoi(argv[2]);
 
 
-        char *coverImageName = argv[2];
+        char *coverImageName = argv[3];
         IMAGE *coverImage = readImage(coverImageName);
 
         if (coverImage != NULL) { //if cover image is NULL the image is ignored
@@ -242,7 +242,7 @@ int main(int argc, char **argv) {
         }
 
     } else {
-        printf("\nThe option you have entered in not included!\n");
+        printf("\nThe instruction you have entered in not included!\n");
         exit(EXIT_FAILURE);
 
     }

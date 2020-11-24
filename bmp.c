@@ -35,7 +35,7 @@ IMAGE* readImage(char* filename){
 
     FILE *fp;
     if((fp = fopen(filename,"rb")) == NULL){
-        printf("Error opening file!");
+        printf("\nError opening file!\n");
         exit(1);
     }
     IMAGE* i=(IMAGE*)malloc(sizeof(IMAGE));
