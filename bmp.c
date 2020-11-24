@@ -1,3 +1,29 @@
+/*<This file represents the implementation of .bmp files.>
+Copyright (C) <2020>  <ckasou01>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+Υou should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
+/**
+ *
+ * @file bmp.c
+ *
+ * @brief This file represents the implementation of.bmp files.
+ *
+ * @author Christos Kasoulides
+ * @version 1.0
+ * @since 24/11/20
+ *
+ */
 
 #include "bmp.h"
 #include "stdlib.h"
@@ -26,7 +52,7 @@ IMAGE* readImage(char* filename){
         printf("\nFile %s is not .bmp image.\n",filename);      //check if file is BMP type
     }
     if (i->iheader->biCompression!=0){
-        printf("\nFile %s is compressed.\n,filename");          //check if file is compressed
+        printf("\nFile %s is compressed.\n",filename);          //check if file is compressed
     }
     if (i->iheader->biBitCount!=24){
         printf("\nBits per PIXEL is not 24.\n");                // check if bits pe PIXEL are 24-bits
