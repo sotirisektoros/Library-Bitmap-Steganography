@@ -1,5 +1,29 @@
-/*
+/*<This file represents the client>
+Copyright (C) <2020>  <ckasou01>
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+Υou should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
+/**
+ *
+ * @file client.c
+ *
+ * @brief This file represents the client.
+ *
+ * @author Christos Kasoulides
+ * @version 1.0
+ * @since 24/11/20
+ *
+ */
 
 #include <string.h>
 #include <stdio.h>
@@ -28,7 +52,7 @@ int main(int argc, char **argv) {
 
     char *option = argv[1];
 
-    if (strcmp(option, "-list")) {
+    if (strcmp(option, "-list") == 0) {
 
         if (argc == 2) { //arguments for -list from command line must be more than 1
             printf("\nWrong number of arguments.\n");
@@ -44,7 +68,7 @@ int main(int argc, char **argv) {
             }
         }
 
-    } else if (strcmp(option, "-grayscale")) {
+    } else if (strcmp(option, "-grayscale") == 0) {
 
         if (argc != 5) { //arguments for -grayscale from command line must be 3
             printf("\nWrong number of arguments.\n");
@@ -56,15 +80,19 @@ int main(int argc, char **argv) {
             IMAGE *image = readImage(argv[i]);
 
             if (image != NULL) { //if image is NULL the image is ignored
-                char *newExtension = "new-";
                 bmpToGrayscale(image);
+
+
+                char* newExtension = (char*)calloc(1,4+sizeof(argv[i])+1);
+                strcat(newExtension, "new-");
                 strcat(newExtension, argv[i]);
                 saveImage(image, newExtension);
+                free(newExtension);
             }
         }
 
 
-    } else if (strcmp(option, "-encodeStegano")) {
+    } else if (strcmp(option, "-encodeStegano") == 0) {
 
         if (argc != 5) { //arguments for -encodeStegano from command line must be 3
             printf("\nWrong number of arguments.\n");
@@ -85,12 +113,14 @@ int main(int argc, char **argv) {
 
             encodeStegano(noOfBits, coverImage, secretImage);
 
-            char *newExtension = "new-";
+            char* newExtension = (char*)calloc(1,4+sizeof(coverImageName)+1);
+            strcat(newExtension, "new-");
             strcat(newExtension, coverImageName);
             saveImage(coverImage, newExtension);
+            free(newExtension);
         }
 
-    } else if (strcmp(option, "-decodeStegano")) {
+    } else if (strcmp(option, "-decodeStegano") == 0) {
 
         if (argc != 4) { //arguments for -decodeStegano from command line must be 2
             printf("\nWrong number of arguments.\n");
@@ -107,12 +137,14 @@ int main(int argc, char **argv) {
 
             decodeStegano(noOfBits, coverImage);
 
-            char *newExtension = "new-";
+            char* newExtension = (char*)calloc(1,4+sizeof(coverImageName)+1);
+            strcat(newExtension, "new-");
             strcat(newExtension, coverImageName);
             saveImage(coverImage, newExtension);
+            free(newExtension);
         }
 
-    } else if (strcmp(option, "-encodeText")) {
+    } else if (strcmp(option, "-encodeText") == 0) {
 
         if (argc != 4) { //arguments for -encodeText from command line must be 2
             printf("\nWrong number of arguments.\n");
@@ -129,16 +161,18 @@ int main(int argc, char **argv) {
 
             encodeText(image, text,SYSTEMKEY);
 
-            char *newExtension = "new-";
+            char* newExtension = (char*)calloc(1,4+sizeof(imageName)+1);
+            strcat(newExtension, "new-");
             strcat(newExtension, imageName);
             saveImage(image, newExtension);
+            free(newExtension);
         }
 
 
 
 
 
-    } else if (strcmp(option, "-decodeText")) {
+    } else if (strcmp(option, "-decodeText") == 0) {
 
         if (argc != 5) { //arguments for -decodeText from command line must be 3
             printf("\nWrong number of arguments.\n");
@@ -160,13 +194,15 @@ int main(int argc, char **argv) {
 
             decodeText(image,msLength,SYSTEMKEY,filename);
 
-            char *newExtension = "new-";
+            char* newExtension = (char*)calloc(1,4+sizeof(imageName)+1);
+            strcat(newExtension, "new-");
             strcat(newExtension, imageName);
             saveImage(image, newExtension);
+            free(newExtension);
         }
 
 
-    } else if (strcmp(option, "-stringToImage")) {
+    } else if (strcmp(option, "-stringToImage") == 0) {
 
         if (argc != 4) { //arguments for -stringToImage from command line must be 2
             printf("\nWrong number of arguments.\n");
@@ -183,12 +219,14 @@ int main(int argc, char **argv) {
 
             stringToImage(image, text);
 
-            char *newExtension = "new-";
+            char* newExtension = (char*)calloc(1,4+sizeof(imageName)+1);
+            strcat(newExtension, "new-");
             strcat(newExtension, imageName);
             saveImage(image, newExtension);
+            free(newExtension);
         }
 
-    } else if (strcmp(option, "-imageToString")) {
+    } else if (strcmp(option, "-imageToString") == 0) {
 
         if (argc != 3) { //arguments for -ImageToString from command line must be 1
             printf("\nWrong number of arguments.\n");
@@ -216,4 +254,4 @@ int main(int argc, char **argv) {
 
 }
 
-*/
+
