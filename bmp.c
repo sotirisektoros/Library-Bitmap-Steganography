@@ -50,12 +50,15 @@ IMAGE* readImage(char* filename){
     fread(i->iheader,sizeof(BITMAPINFOHEADER),1,fp);
     if (i->fheader->bfType1!='B' || i->fheader->bfType2!='M'){
         printf("\nFile %s is not .bmp image.\n",filename);      //check if file is BMP type
+        return NULL;
     }
     if (i->iheader->biCompression!=0){
         printf("\nFile %s is compressed.\n",filename);          //check if file is compressed
+        return NULL;
     }
     if (i->iheader->biBitCount!=24){
         printf("\nBits per PIXEL is not 24.\n");                // check if bits pe PIXEL are 24-bits
+        return NULL;
     }
 
     i->size = (i->iheader->biWidth * i->iheader->biHeight);
