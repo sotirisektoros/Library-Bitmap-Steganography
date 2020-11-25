@@ -95,6 +95,8 @@ void encodeText(IMAGE *image, char *text, unsigned int systemkey) {
 
 
     }
+    free(temp);
+    free(text);
 
 }
 
@@ -113,12 +115,14 @@ char *readTextFromFile(char *filename) {
         char *buffer = (char *) calloc(11, sizeof(char));
         n = fread(buffer, sizeof(char), 10, fp);
         if (n == 0) {
+            free(buffer);
             break;
         }
         size += n;
         input = (char *) realloc(input, size * sizeof(char));
         strcat(input, buffer);
         if (n < 10) {
+            free(buffer);
             break;
         }
         free(buffer);

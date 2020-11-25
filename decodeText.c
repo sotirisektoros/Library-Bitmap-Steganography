@@ -90,7 +90,7 @@ void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filena
         b<<=1;
 
     }
-
+    free(temp);
 }
 
 #ifdef DEBUGDT
