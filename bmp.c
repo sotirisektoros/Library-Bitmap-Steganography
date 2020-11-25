@@ -84,6 +84,7 @@ IMAGE* readImage(char* filename){
     }
 
     fclose(fp);
+    free(fp);
     return i;
 }
 
