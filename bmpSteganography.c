@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include "stringToImage.h"
 #include "ImageToString.h"
 
-#define SYSTEMKEY 123
+#define SYSTEMKEY 232
 
 
 int main(int argc, char **argv) {
@@ -48,6 +48,11 @@ int main(int argc, char **argv) {
            "This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
            "This is free software, and you are welcome to redistribute it\n"
            "under certain conditions; type `show c' for details.\n");
+
+        if(argc == 1){
+            printf("\nYou must insert an instruction.\n");
+            exit(EXIT_FAILURE);
+        }
 
 
     char *option = argv[1];
@@ -66,11 +71,17 @@ int main(int argc, char **argv) {
             if (image != NULL) { //if image is NULL the image is ignored
                 list(image);
             }
+
+            free(image->iheader);
+            free(image->fheader);
+            free(image->data);
+            free(image);
+
         }
 
     } else if (strcmp(option, "-grayscale") == 0) {
 
-        if (argc != 5) { //arguments for -grayscale from command line must be 3
+        if (argc == 2) { //arguments for -grayscale from command line must be more than 1
             printf("\nWrong number of arguments.\n");
             exit(EXIT_FAILURE);
 
@@ -88,6 +99,11 @@ int main(int argc, char **argv) {
                 strcat(newExtension, argv[i]);
                 saveImage(image, newExtension);
                 free(newExtension);
+
+                free(image->iheader);
+                free(image->fheader);
+                free(image->data);
+                free(image);
             }
         }
 
@@ -118,6 +134,16 @@ int main(int argc, char **argv) {
             strcat(newExtension, coverImageName);
             saveImage(coverImage, newExtension);
             free(newExtension);
+
+            free(coverImage->iheader);
+            free(coverImage->fheader);
+            free(coverImage->data);
+            free(coverImage);
+
+            free(secretImage->iheader);
+            free(secretImage->fheader);
+            free(secretImage->data);
+            free(secretImage);
         }
 
     } else if (strcmp(option, "-decodeStegano") == 0) {
@@ -142,6 +168,11 @@ int main(int argc, char **argv) {
             strcat(newExtension, coverImageName);
             saveImage(coverImage, newExtension);
             free(newExtension);
+
+            free(coverImage->iheader);
+            free(coverImage->fheader);
+            free(coverImage->data);
+            free(coverImage);
         }
 
     } else if (strcmp(option, "-encodeText") == 0) {
@@ -166,6 +197,13 @@ int main(int argc, char **argv) {
             strcat(newExtension, imageName);
             saveImage(image, newExtension);
             free(newExtension);
+
+            free(image->iheader);
+            free(image->fheader);
+            free(image->data);
+            free(image);
+
+            free(text);
         }
 
 
@@ -199,6 +237,11 @@ int main(int argc, char **argv) {
             strcat(newExtension, imageName);
             saveImage(image, newExtension);
             free(newExtension);
+
+            free(image->iheader);
+            free(image->fheader);
+            free(image->data);
+            free(image);
         }
 
 
@@ -224,6 +267,13 @@ int main(int argc, char **argv) {
             strcat(newExtension, imageName);
             saveImage(image, newExtension);
             free(newExtension);
+
+            free(image->iheader);
+            free(image->fheader);
+            free(image->data);
+            free(image);
+
+            free(text);
         }
 
     } else if (strcmp(option, "-imageToString") == 0) {
@@ -239,6 +289,11 @@ int main(int argc, char **argv) {
 
         if (image != NULL) { //if image is NULL the image is ignored
             ImageToString(image);
+
+            free(image->iheader);
+            free(image->fheader);
+            free(image->data);
+            free(image);
         }
 
     } else {

@@ -44,12 +44,14 @@ byte* readTextFile(char* filename){
         byte* buffer=(byte*)calloc(11,sizeof(byte));
         n= fread(buffer,sizeof(byte),10,fp);
         if(n==0){
+            free(buffer);
             break;
         }
         size+=n;
         input=(byte*)realloc(input,size*sizeof(byte));
         strcat(input,buffer);
         if(n<10){
+            free(buffer);
             break;
         }
         free(buffer);

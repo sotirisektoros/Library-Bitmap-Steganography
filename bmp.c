@@ -57,7 +57,7 @@ IMAGE* readImage(char* filename){
         return NULL;
     }
     if (i->iheader->biBitCount!=24){
-        printf("\nBits per PIXEL is not 24.\n");                // check if bits pe PIXEL are 24-bits
+        printf("\nBits per PIXEL are not 24.\n");                // check if bits pe PIXEL are 24-bits
         return NULL;
     }
 
