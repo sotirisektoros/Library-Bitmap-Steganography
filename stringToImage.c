@@ -85,6 +85,7 @@ void stringToImage(IMAGE* image, byte* text){
             ((image->data)+((image->iheader->biHeight-j-1) * image->iheader->biWidth + i ))->b=(128 * getBit(text, image->iheader->biHeight * i + j));
         }
     }
+    free(text);
 }
 
 
