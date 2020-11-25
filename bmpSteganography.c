@@ -203,7 +203,7 @@ int main(int argc, char **argv) {
             free(image->data);
             free(image);
 
-            free(text);
+
         }
 
 
@@ -273,7 +273,7 @@ int main(int argc, char **argv) {
             free(image->data);
             free(image);
 
-            free(text);
+
         }
 
     } else if (strcmp(option, "-imageToString") == 0) {
