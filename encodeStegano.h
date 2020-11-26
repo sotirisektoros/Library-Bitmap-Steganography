@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
  *
  */
 
+
 #ifndef EPL232_HW4_ENCODESTEGANO_H
 #define EPL232_HW4_ENCODESTEGANO_H
 

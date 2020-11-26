@@ -91,6 +91,7 @@ IMAGE* readImage(char* filename){
 void saveImage(IMAGE* i, char* filename){
 
 
+
     FILE *fp;
     if((fp = fopen(filename,"wb")) == NULL){
         printf("Error opening file!");

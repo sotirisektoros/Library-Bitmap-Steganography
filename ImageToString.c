@@ -55,6 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
     fflush(stdout);
 }*/
 
+
 void ImageToString(IMAGE *image) {
     FILE* fp;
     if((fp = fopen("outputText.txt","wb")) == NULL){
