@@ -30,7 +30,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.*/
 #include <stdio.h>
 
 
-static int *createPermutationFunction(int N, unsigned int systemkey) {
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "bmplib.h"
+
+PRIVATE int *createPermutationFunction(int N, unsigned int systemkey) {
 
     srand(systemkey);
 
@@ -50,37 +55,38 @@ static int *createPermutationFunction(int N, unsigned int systemkey) {
 
 
     }
-
     return permutation;
 }
-
-void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filename) {
+    int decodeText(char *imageFile, int msgLength, unsigned int systemkey, char *textFile) {
     FILE* fp;
-    if((fp = fopen(filename,"wb")) == NULL){
+    if((fp = fopen(textFile,"wb")) == NULL){
         printf("Error opening file!");
         exit(1);
     }
     int o = 0;
     int countBits=0;
     byte b='\0';
+    BMP* image= readImage(imageFile);
+   
+    int* temp = (createPermutationFunction(image->fileHeader.bfSize-54, systemkey));
 
-    int* temp = (createPermutationFunction(image->fheader->bfSize-54, systemkey));
-
-    for (int i = 0; i < (1 + msLength) * 8; i++) {
+    for (int i = 0; i < (1 + msgLength) * 8; i++) {
         o = temp[i];
+        for (int j = 0; j < image->infoHeader.biWidth; j++) {
         switch (o % 3) {
             case 0:
-                b |= (image->data[o / 3].r & 0x1);
+                b |= (image->pixels[o / 3].red & 0x1);
                 countBits++;
                 break;
             case 1:
-                b |= (image->data[o / 3].g & 0x1);
+                b |= (image->pixels[o / 3].green & 0x1);
                 countBits++;
                 break;
             default:
-                b |= (image->data[o / 3].b & 0x1);
+                b |= (image->pixels[o / 3].blue & 0x1);
                 countBits++;
                 break;
+        }
         }
         if(countBits==8){
             countBits=0;
@@ -91,6 +97,9 @@ void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filena
 
     }
     free(temp);
+    free(image);
+    free(fp);
+    return EXIT_SUCCESS;
 }
 
 
@@ -98,10 +107,10 @@ void decodeText(IMAGE *image, int msLength, unsigned int systemkey, char *filena
 int main(int argc, char **argv) {
     int msLength=atoi(argv[2]);
 
-    IMAGE *i = readImage(argv[1]);
+    char *imageFile = argv[1];
 
     int systemkey = 123;
-    decodeText(i, msLength, systemkey, "test.txt");
+    int a=decodeText(imageFile, msLength, systemkey, "test.txt");
 
     return 0;
 }
